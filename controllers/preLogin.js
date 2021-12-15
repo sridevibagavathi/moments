@@ -6,10 +6,14 @@ import JWT from "jsonwebtoken";
 const RS256_PRIVATE_KEY = process.env.RS256_PRIVATE_KEY;
 const TOKEN_EXPIRY_HOURS = process.env.JWT_TOKEN_EXPIRY_HOURS;
 import { JwtAlgorithm } from "../data/consts";
+import signUpValidator from "../validators/signUp"
+import loginValidator from "../validators/login"
 
 const signUp = async (req, res) => {
   try {
     const data = req.body;
+    const validator = signUpValidator(data)
+    if (validator.error) return res.status(statusCode.BAD_REQUEST).send({ success: false, errorMessage: validator.error })
     const emailCheckQuery = emailExists(data.emailId);
     const result = await pgConnection(emailCheckQuery);
     if (result.rows.length)
@@ -32,6 +36,8 @@ const signUp = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { emailId, password } = req.body;
+    const validator = loginValidator({ emailId, password })
+    if (validator.error) return res.status(statusCode.BAD_REQUEST).send({ success: false, errorMessage: validator.error })
     const emailCheckQuery = emailExists(emailId);
     const emailCheck = await pgConnection(emailCheckQuery);
     if (!emailCheck.rowCount)
