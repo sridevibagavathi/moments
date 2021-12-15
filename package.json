@@ -5,6 +5,9 @@
   "main": "server.js",
   "author": "Sridevi",
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/sridevibagavathi/moments"
+  },
   "scripts": {
     "local": "nodemon server.js",
     "format": "prettier --write ."
