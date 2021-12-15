@@ -1,0 +1,1 @@
+exports.JwtAlgorithm = "RS256";
