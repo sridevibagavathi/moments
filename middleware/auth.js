@@ -25,35 +25,3 @@ const auth = (req, res, next) => {
 };
 
 export default auth;
-
-// export default class Auth {
-//     public async handle({ request, response }: HttpContextContract, next: () => Promise<void>) {
-//         const authHeader = request.header('authorization')
-//         if (!authHeader)
-//             return response.unauthorized({
-//                 success: false,
-//                 message: 'Missing JWT Token',
-//             })
-
-//         try {
-//             const decoded = JWT.verify(authHeader.split(' ')[1], JWT_SECRET_KEY) as JWTPayload
-//             const isVerified = decoded.claims.verified
-
-//             if (!isVerified)
-//                 return response.unauthorized({
-//                     success: false,
-//                     message: 'User not verified',
-//                 })
-
-//             if (request.ctx) request.ctx.token = { parsed: decoded, base64: authHeader }
-//         } catch (err) {
-//             return response.unauthorized({
-//                 success: false,
-//                 message: `Error verifying JWT Token: ${err.message}`,
-//             })
-//         }
-
-//         await next()
-//         return response.send(await Compression.zipResponse(response))
-//     }
-// }
