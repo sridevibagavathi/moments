@@ -43,13 +43,13 @@ const login = async (req, res) => {
     if (!emailCheck.rowCount)
       return res
         .status(statusCode.BAD_REQUEST)
-        .send({ sucess: false, message: `Email not exists` });
+        .send({ sucess: false, message: `Wrong credentials` });
     const passwordCheckQuery = passwordExists(emailId, password);
     const passwordCheck = await pgConnection(passwordCheckQuery);
     if (!passwordCheck.rowCount)
       return res
         .status(statusCode.BAD_REQUEST)
-        .send({ sucess: false, message: `Wrong password` });
+        .send({ sucess: false, message: `Wrong credentials` });
     const token = JWT.sign({ emailId, password }, RS256_PRIVATE_KEY, {
       algorithm: JwtAlgorithm,
       expiresIn: TOKEN_EXPIRY_HOURS,
