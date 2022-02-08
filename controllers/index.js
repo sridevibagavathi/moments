@@ -1,6 +1,6 @@
 import { signUp, login } from "./preLogin";
 import { logout } from "./postLogin";
-import { addMoment, getMoment, updateMoment, deleteMoment } from "./moments";
+import { addMoment, getMoment, updateMoment, deleteMoment, getMomentById } from "./moments";
 
 export default {
   signUp,
@@ -10,4 +10,5 @@ export default {
   getMoment,
   updateMoment,
   deleteMoment,
+  getMomentById
 };

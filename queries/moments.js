@@ -12,6 +12,10 @@ const get = (searchValue, orderBy, orderByValue, limit, offset) => {
   return query
 };
 
+const getById = (id) => {
+  return `select id, title, tags, image from moments where active = 1 and id = ${id} limit 1`
+};
+
 const getCount = (searchValue) => {
   let query = `select count(*) from moments where active = 1`;
   if (searchValue) query += `and title ilike ${searchValue}`
@@ -39,4 +43,4 @@ const archive = (id) => {
   return `update moments set active = 0 where id = ${id} and active = 1`;
 };
 
-export { add, get, getCount, update, momentIdExists, archive };
+export { add, get, getCount, update, momentIdExists, archive, getById };

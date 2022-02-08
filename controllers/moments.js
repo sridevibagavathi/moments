@@ -5,6 +5,7 @@ import {
   update,
   momentIdExists,
   archive,
+  getById
 } from "../queries/moments";
 import { emailExists } from "../queries/signUp";
 import { idAndEmailExists } from "../queries/login";
@@ -142,4 +143,14 @@ const deleteMoment = async (req, res) => {
   return res.send({ sucess: true, message: `Moment deleted successfully` });
 };
 
-export { addMoment, getMoment, updateMoment, deleteMoment };
+const getMomentById = async (req, res) => {
+  try {
+    const getQuery = getById(req.params.id)
+    const result = await pgConnection(getQuery)
+    return res.send({ success: true, data: result.rows[0] });
+  } catch(e){
+    return res.send({ success: false, message: `Error in getting moment by id` });
+  }
+}
+
+export { addMoment, getMoment, updateMoment, deleteMoment, getMomentById };

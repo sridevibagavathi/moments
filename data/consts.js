@@ -3,4 +3,5 @@ export const Whitelist = [
     'image/png',
     'image/jpeg',
     'image/jpg',
+    'application/pdf'
   ]

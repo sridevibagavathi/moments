@@ -18,6 +18,7 @@ app.use(cors({
 app.use(cors({
   methods: ['GET', 'POST', 'DELETE', 'UPDATE', 'PUT', 'PATCH']
 }));
+app.use('/uploads', express.static('uploads'));
 app.use(compression()); //Compress all routes
 app.use("/", urlencodedParser, preLoginRoutes);
 app.use(auth);
