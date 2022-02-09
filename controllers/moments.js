@@ -34,25 +34,25 @@ const addMoment = async (req, res) => {
     if (!result.rows.length)
       return res
         .status(statusCode.NOT_FOUND)
-        .send({ sucess: false, message: `Email not exists` });
+        .send({ success: false, message: `Email not exists` });
 
     const idEmailQuery = idAndEmailExists(data.createdBy, data.userId);
     const checkIdAgainstEmail = await pgConnection(idEmailQuery);
     if (!checkIdAgainstEmail.rows.length)
       return res
         .status(statusCode.NOT_FOUND)
-        .send({ sucess: false, message: `Email-id and userId conflicts` });
+        .send({ success: false, message: `Email-id and userId conflicts` });
 
     const addMomentQuery = add(data);
     const inserted = await pgConnection(addMomentQuery);
     if (!inserted.rowCount)
       return res.send({ success: false, message: `Error in inserting moment` });
 
-    return res.send({ sucess: true, message: `Moment added successfully` });
+    return res.send({ success: true, message: `Moment added successfully` });
   } catch (e) {
     return res
       .status(statusCode.BAD_REQUEST)
-      .send({ sucess: false, message: e });
+      .send({ success: false, message: e });
   }
 };
 
@@ -79,7 +79,7 @@ const getMoment = async (req, res) => {
   } catch (e) {
     return res
       .status(statusCode.BAD_REQUEST)
-      .send({ sucess: false, message: e });
+      .send({ success: false, message: e });
   }
 };
 
@@ -100,32 +100,32 @@ const updateMoment = async (req, res) => {
     if (!result.rows.length)
       return res
         .status(statusCode.NOT_FOUND)
-        .send({ sucess: false, message: `Email not exists` });
+        .send({ success: false, message: `Email not exists` });
 
     const idEmailQuery = idAndEmailExists(data.updatedBy, data.userId);
     const checkIdAgainstEmail = await pgConnection(idEmailQuery);
     if (!checkIdAgainstEmail.rows.length)
       return res
         .status(statusCode.NOT_FOUND)
-        .send({ sucess: false, message: `Email-id and userId conflicts` });
+        .send({ success: false, message: `Email-id and userId conflicts` });
 
     const idQuery = momentIdExists(req.params.id);
     const checkMomentId = await pgConnection(idQuery);
     if (!checkMomentId.rows.length)
       return res
         .status(statusCode.NOT_FOUND)
-        .send({ sucess: false, message: `Given moment id does not exists` });
+        .send({ success: false, message: `Given moment id does not exists` });
 
     const updateMomentQuery = update(data, req.params.id);
     const updated = await pgConnection(updateMomentQuery);
     if (!updated.rowCount)
       return res.send({ success: false, message: `Error in updating moment` });
 
-    return res.send({ sucess: true, message: `Moment updated successfully` });
+    return res.send({ success: true, message: `Moment updated successfully` });
   } catch (e) {
     return res
       .status(statusCode.BAD_REQUEST)
-      .send({ sucess: false, message: e });
+      .send({ success: false, message: e });
   }
 };
 
@@ -135,12 +135,12 @@ const deleteMoment = async (req, res) => {
   if (!checkMomentId.rows.length)
     return res
       .status(statusCode.NOT_FOUND)
-      .send({ sucess: false, message: `Given moment id does not exists` });
+      .send({ success: false, message: `Given moment id does not exists` });
   const deleteMomentQuery = archive(req.params.id);
   const deleted = await pgConnection(deleteMomentQuery);
   if (!deleted.rowCount)
     return res.send({ success: false, message: `Error in deleting moment` });
-  return res.send({ sucess: true, message: `Moment deleted successfully` });
+  return res.send({ success: true, message: `Moment deleted successfully` });
 };
 
 const getMomentById = async (req, res) => {

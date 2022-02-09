@@ -13,10 +13,10 @@ const logout = async (req, res) => {
     if (!result.rows.length)
       return res
         .status(statusCode.CONFLICT)
-        .send({ sucess: false, message: `Email not exists` });
-    return res.send({ sucess: true, message: `User logged out successfully` });
+        .send({ success: false, message: `Email not exists` });
+    return res.send({ success: true, message: `User logged out successfully` });
   } catch (e) {
-    return res.status(statusCode.CONFLICT).send({ sucess: false, message: e });
+    return res.status(statusCode.CONFLICT).send({ success: false, message: e });
   }
 };
 

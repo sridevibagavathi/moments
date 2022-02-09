@@ -19,17 +19,17 @@ const signUp = async (req, res) => {
     if (result.rows.length)
       return res
         .status(statusCode.CONFLICT)
-        .send({ sucess: false, message: `Email already exists` });
+        .send({ success: false, message: `Email already exists` });
     const insertQuery = signUpInsert(data);
     const inserted = await pgConnection(insertQuery);
     return res.send({
-      sucess: true,
+      success: true,
       message: inserted.rowCount
         ? `User created successfully!!`
         : `Sorry unable to create user!!`,
     });
   } catch (e) {
-    return res.status(statusCode.CONFLICT).send({ sucess: false, message: e });
+    return res.status(statusCode.CONFLICT).send({ success: false, message: e });
   }
 };
 
@@ -43,25 +43,25 @@ const login = async (req, res) => {
     if (!emailCheck.rowCount)
       return res
         .status(statusCode.BAD_REQUEST)
-        .send({ sucess: false, message: `Wrong credentials` });
+        .send({ success: false, message: `Wrong credentials` });
     const passwordCheckQuery = passwordExists(emailId, password);
     const passwordCheck = await pgConnection(passwordCheckQuery);
     if (!passwordCheck.rowCount)
       return res
         .status(statusCode.BAD_REQUEST)
-        .send({ sucess: false, message: `Wrong credentials` });
+        .send({ success: false, message: `Wrong credentials` });
     const token = JWT.sign({ emailId, password }, RS256_PRIVATE_KEY, {
       algorithm: JwtAlgorithm,
       expiresIn: TOKEN_EXPIRY_HOURS,
     });
     return res.send({
-      sucess: true,
+      success: true,
       token,
       userId: emailCheck.rows[0].id,
       emailId,
     });
   } catch (e) {
-    return res.status(statusCode.CONFLICT).send({ sucess: false, message: e });
+    return res.status(statusCode.CONFLICT).send({ success: false, message: e });
   }
 };
 
